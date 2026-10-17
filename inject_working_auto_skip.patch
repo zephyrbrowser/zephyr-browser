@@ -1,0 +1,719 @@
+warning: in the working copy of 'main/adblock/inject.js', LF will be replaced by CRLF the next time Git touches it
+diff --git a/main/adblock/inject.js b/main/adblock/inject.js
+index aa19cfe9..19563417 100644
+--- a/main/adblock/inject.js
++++ b/main/adblock/inject.js
+@@ -1,411 +1,256 @@
+ // main/adblock/inject.js
+-// Cosmetic filtering injection - SAFE selectors only (Brave-level precision)
++// Production YouTube Ad Handler - Electron/Chromium Safe
+ 
+-// FIX 4: Enhanced SAFE CSS - Aggressive ad network blocking
+-// Only target KNOWN ad networks and components
+ const UNIVERSAL_AD_BLOCKING_CSS = `
+-/* Google Ads - specific components ONLY */
+-ins.adsbygoogle,
+-.adsbygoogle,
+-.adsbygoogle-noablate,
+-div[id^="google_ads_iframe"],
+-iframe[id^="google_ads_"],
+-iframe[id^="aswift_"],
+-iframe[name^="google_ads_"],
+-div[data-google-query-id] {
+-  display: none !important;
+-  visibility: hidden !important;
+-  height: 0 !important;
+-  width: 0 !important;
+-}
+-
+-/* YouTube ads - SPECIFIC component renderers (NOT generic classes) */
++/* Hide ad elements */
+ ytd-display-ad-renderer,
+ ytd-promoted-video-renderer,
+-ytd-promoted-sparkles-web-renderer,
+-ytd-promoted-sparkles-text-search-renderer,
+-ytd-companion-slot-renderer,
+ ytd-ad-slot-renderer,
+-ytd-banner-promo-renderer,
+-ytd-statement-banner-renderer,
+-ytd-action-companion-ad-renderer,
+-ytd-reel-video-renderer[is-ad],
+-ytd-in-feed-ad-layout-renderer,
+-.ytp-ad-overlay-container,
+-.ytp-ad-player-overlay,
+-.ytp-ad-image-overlay,
+-.ytp-ad-text-overlay,
+-.video-ads.ytp-ad-module {
+-  display: none !important;
+-  visibility: hidden !important;
+-}
+-
+-/* Taboola / Outbrain - SPECIFIC containers only */
+-.trc_rbox_outer,
+-.trc_rbox,
+-.trc_rbox_container,
+-.trc-content-sponsored,
+-.ob-widget,
+-.ob_what,
+-.ob-rec-link,
+-.outbrain-container,
+-div[id*="taboola-"],
+-div[id*="outbrain-"],
+-div[data-taboola-container],
+-div[data-ob-template],
+-div[data-outbrain-container],
+-.OUTBRAIN,
+-[class*="taboola"],
+-[class*="outbrain"] {
+-  display: none !important;
+-  visibility: hidden !important;
+-}
+-
+-/* Ad iframes - specific ad networks only */
+-iframe[src*="doubleclick.net"],
+-iframe[src*="googlesyndication.com"],
+-iframe[src*="googleadservices.com"],
+-iframe[src*="taboola.com"],
+-iframe[src*="outbrain.com"],
+-iframe[src*="advertising.com"],
+-iframe[src*="serving-sys.com"],
+-iframe[src*="smartadserver.com"],
+-iframe[src*="pubmatic.com"],
+-iframe[src*="casalemedia.com"],
+-iframe[id*="google_ads"],
+-iframe[id*="_ad_"],
+-iframe[name*="google_ads"] {
+-  display: none !important;
+-  visibility: hidden !important;
+-}
+-
+-/* CNN specific ad slots - FIX 4 - More specific selectors */
+-div[id^="ad-slot-"],
+-div[id^="ad_slot_"],
+-div[id^="google_ads_"],
+-div[class*="ad-slot-"],
+-div[class*="ad_slot_"],
+-div[data-ad-name],
+-div[data-ad-id],
+-.cn-ads,
+-.cn-ad,
+-#ad-container,
+-#advertisement-container,
+-.advertisement-wrapper,
+-.ad-wrapper,
+-.ad-unit {
+-  display: none !important;
+-  visibility: hidden !important;
+-}
+-
+-/* BBC specific ad slots - FIX 4 */
+-.bbccom_advert_container,
+-.bbccom_adsense,
+-.bbccom_slot,
+-div[id^="bbccom_"],
+-div[class*="bbccom_ad"],
+-.bbc-advert,
+-.bbc-ad-container,
+-[id*="bbccom_ad"] {
+-  display: none !important;
+-  visibility: hidden !important;
+-}
+-
+-/* DailyMail video ads and sticky players */
+-.mol-video-ad,
+-.mol-video-wrapper,
+-.mol-video-sticky,
+-div[class*="video-ad"],
+-div[id*="video-ad"],
+-.sticky-video-wrapper,
+-.sticky-video-container,
+-#molVideoSticky,
+-#floating-video-container,
+-.floating-video-wrapper {
+-  display: none !important;
+-  visibility: hidden !important;
+-}
+-
+-/* Streaming site popups and overlays */
+-div[class*="attention"],
+-div[class*="download-popup"],
+-div[class*="file-ready"],
+-.modal-overlay,
+-.popup-overlay,
+-#popup-container,
+-[class*="interstitial"],
+-[id*="interstitial"],
+-.ad-interstitial,
+-/* Streaming download buttons that are actually ads */
+-a[href*="download"],
+-button[class*="download"],
+-div[class*="download"] {
+-  display: none !important;
+-  visibility: hidden !important;
+-}
+-
+-/* UNIVERSAL AD BLOCKING - Nuclear option for ALL websites */
+-/* DISABLED on YouTube.com - let YouTube-specific rules handle it */
+-html:not([data-youtube]) div[class*="-ad-"],
+-html:not([data-youtube]) div[class*="_ad_"],
+-html:not([data-youtube]) div[class^="ad-"],
+-html:not([data-youtube]) div[class$="-ad"],
+-html:not([data-youtube]) div[id*="-ad-"],
+-html:not([data-youtube]) div[id*="_ad_"],
+-html:not([data-youtube]) div[id^="ad-"],
+-html:not([data-youtube]) div[id^="ad_"],
+-html:not([data-youtube]) section[class*="ad-"],
+-html:not([data-youtube]) aside[class*="ad-"],
+-/* Video ads */
+-div[class*="video-ad"],
+-div[id*="video-ad"],
+-/* Banner ads */
+-div[class*="banner"],
+-div[id*="banner"],
+-/* Sponsored content */
+-[class*="sponsor"],
+-[id*="sponsor"],
+-[data-sponsor],
+-/* Promotional content */
+-[class*="promo-"],
+-[id*="promo-"],
+-/* Advertisement variations */
+-[class*="advertisement"],
+-[id*="advertisement"],
+-[class*="adverts"],
+-/* Sticky/Fixed ads */
+-[class*="sticky-ad"],
+-[class*="fixed-ad"],
+-/* Modal/Popup ads */
+-[class*="ad-modal"],
+-[class*="ad-popup"],
+-/* Ad wrappers */
+-[class*="ad-wrapper"],
+-[class*="ad-container"],
+-[id*="ad-container"] {
+-  display: none !important;
+-  visibility: hidden !important;
+-  opacity: 0 !important;
+-  height: 0 !important;
+-  width: 0 !important;
+-  position: absolute !important;
+-  top: -9999px !important;
+-  left: -9999px !important;
+-}
++#panels.ytd-watch-flexy { display: none !important; }
+ `;
+ 
+-// FIX 2: SAFE JavaScript - NO text heuristics, NO generic matching
+ const GENERIC_COSMETIC_SCRIPT = `
+ (function() {
+   'use strict';
+-
+   if (window.__zephyrCosmeticFilter) return;
+   window.__zephyrCosmeticFilter = true;
+ 
+-  // FIX 4: Enhanced selectors - More aggressive ad blocking
+   const AD_SELECTORS = [
+-    // Google Ads - exact selectors only
+-    'ins.adsbygoogle',
+-    '.adsbygoogle',
+-    '.adsbygoogle-noablate',
+-    'div[id^="google_ads_iframe"]',
+-    'iframe[id^="google_ads_"]',
+-    'iframe[id^="aswift_"]',
+-    'iframe[name^="google_ads_"]',
+-    'div[data-google-query-id]',
+-
+-    // YouTube ads - component renderers only
+     'ytd-display-ad-renderer',
+     'ytd-promoted-video-renderer',
+-    'ytd-promoted-sparkles-web-renderer',
+-    'ytd-promoted-sparkles-text-search-renderer',
+-    'ytd-companion-slot-renderer',
+     'ytd-ad-slot-renderer',
+-    'ytd-banner-promo-renderer',
+-    'ytd-in-feed-ad-layout-renderer',
+-    '.ytp-ad-overlay-container',
+-    '.ytp-ad-player-overlay',
+-    '.video-ads.ytp-ad-module',
+-
+-    // Taboola / Outbrain - specific containers
+-    '.trc_rbox',
+-    '.trc_rbox_outer',
+-    '.trc_rbox_container',
+-    '.ob-widget',
+-    '.ob_what',
+-    '.OUTBRAIN',
+-    'div[id*="taboola-"]',
+-    'div[id*="outbrain-"]',
+-    'div[data-taboola-container]',
+-    'div[data-ob-template]',
+-    '[class*="taboola"]',
+-    '[class*="outbrain"]',
+-
+-    // Ad iframes - specific networks
+-    'iframe[src*="doubleclick.net"]',
+-    'iframe[src*="googlesyndication.com"]',
+-    'iframe[src*="googleadservices.com"]',
+-    'iframe[src*="taboola.com"]',
+-    'iframe[src*="outbrain.com"]',
+-    'iframe[src*="advertising.com"]',
+-    'iframe[src*="smartadserver.com"]',
+-    'iframe[src*="pubmatic.com"]',
+-    'iframe[id*="google_ads"]',
+-    'iframe[id*="_ad_"]',
+-
+-    // CNN ads - FIX 4 - More specific selectors
+-    'div[id^="ad-slot-"]',
+-    'div[id^="ad_slot_"]',
+-    'div[id^="google_ads_"]',
+-    'div[class*="ad-slot-"]',
+-    'div[class*="ad_slot_"]',
+-    'div[data-ad-name]',
+-    'div[data-ad-id]',
+-    '.cn-ads',
+-    '.cn-ad',
+-    '#ad-container',
+-    '#advertisement-container',
+-    '.advertisement-wrapper',
+-    '.ad-wrapper',
+-    '.ad-unit',
+-
+-    // BBC ads - FIX 4
+-    '.bbccom_advert_container',
+-    '.bbccom_adsense',
+-    '.bbccom_slot',
+-    'div[id^="bbccom_"]',
+-    'div[class*="bbccom_ad"]',
+-    '.bbc-advert',
+-    '.bbc-ad-container',
+-    '[id*="bbccom_ad"]',
+-
+-    // DailyMail video ads
+-    '.mol-video-ad',
+-    '.mol-video-wrapper',
+-    '.mol-video-sticky',
+-    'div[class*="video-ad"]',
+-    'div[id*="video-ad"]',
+-    '.sticky-video-wrapper',
+-    '.sticky-video-container',
+-    '#molVideoSticky',
+-    '#floating-video-container',
+-    '.floating-video-wrapper',
+-
+-    // Streaming popups
+-    'div[class*="attention"]',
+-    'div[class*="download-popup"]',
+-    'div[class*="file-ready"]',
+-    '.modal-overlay',
+-    '.popup-overlay',
+-    '#popup-container',
+-    '[class*="interstitial"]',
+-    '[id*="interstitial"]',
+-    '.ad-interstitial'
++    '#panels.ytd-watch-flexy'
+   ];
+ 
+-  let lastMutationTime = 0;
+-  const MUTATION_THROTTLE = 100;
+-
+-  function hideAdElements() {
+-    const now = Date.now();
+-    if (now - lastMutationTime < MUTATION_THROTTLE) return;
+-    lastMutationTime = now;
+-
+-    // Specific selectors
+-    AD_SELECTORS.forEach(selector => {
+-      try {
+-        const elements = document.querySelectorAll(selector);
+-        elements.forEach(el => {
+-          if (el && el.offsetParent !== null && el.style.display !== 'none') {
+-            el.style.setProperty('display', 'none', 'important');
+-            el.style.setProperty('visibility', 'hidden', 'important');
+-          }
+-        });
+-      } catch (error) {
+-        // Ignore selector errors
+-      }
++  function hideAds() {
++    AD_SELECTORS.forEach(sel => {
++      document.querySelectorAll(sel).forEach(el => {
++        if (el && el.offsetParent !== null) {
++          el.style.setProperty('display', 'none', 'important');
++        }
++      });
+     });
++  }
+ 
+-    // UNIVERSAL AD REMOVAL - Remove ANY element with "ad" patterns
+-    const universalAdPatterns = [
+-      // Class patterns
+-      '[class*="-ad-"]', '[class*="_ad_"]', '[class^="ad-"]', '[class$="-ad"]',
+-      '[class*="video-ad"]', '[class*="banner"]', '[class*="sponsor"]',
+-      '[class*="promo-"]', '[class*="advertisement"]', '[class*="adverts"]',
+-      // ID patterns
+-      '[id*="-ad-"]', '[id*="_ad_"]', '[id^="ad-"]', '[id^="ad_"]',
+-      '[id*="video-ad"]', '[id*="banner"]', '[id*="sponsor"]',
+-      '[id*="promo-"]', '[id*="advertisement"]'
+-    ];
+-
+-    universalAdPatterns.forEach(pattern => {
+-      try {
+-        const elements = document.querySelectorAll(pattern);
+-        elements.forEach(el => {
+-          // Skip if it's a legitimate element (e.g., contains main content)
+-          const tag = el.tagName.toLowerCase();
+-          if (tag === 'main' || tag === 'article' || tag === 'section' && el.children.length > 10) {
+-            return; // Skip main content containers
+-          }
+-
+-          // WHITELIST: Skip YouTube UI elements
+-          const id = el.id || '';
+-          const className = el.className?.toString() || '';
+-          const isYouTubeUI = id.includes('masthead') || id.includes('search') ||
+-                             className.includes('ytd-') || className.includes('yt-') ||
+-                             id.includes('guide') || id.includes('header');
+-
+-          if (isYouTubeUI) {
+-            return; // Don't remove YouTube UI
+-          }
+-
+-          if (el.offsetParent !== null) {
+-            el.remove();
+-          }
+-        });
+-      } catch (error) {
+-        // Ignore
+-      }
+-    });
++  setInterval(hideAds, 2000);
++  if (document.readyState !== 'loading') hideAds();
++
++  // === YOUTUBE AD HANDLER ===
++  if (!window.location.hostname.includes('youtube.com')) return;
++  if (window.__ytAdHandler) return;
++  window.__ytAdHandler = true;
++
++  console.log('[YT-AdBlock] Initializing...');
++
++  let adActive = false;
++  let overlay = null;
++  let checkInterval = null;
++  let video = null;
++  let originalMuted = false;
++  let skipClicked = false;
++  let skipAttempts = 0;
++  let adStartTime = 0;
++
++  // Create overlay (appended to #movie_player)
++  function createOverlay() {
++    if (overlay) return overlay;
++
++    const player = document.querySelector('#movie_player');
++    if (!player) return null;
++
++    overlay = document.createElement('div');
++    overlay.id = 'yt-ad-overlay';
++    overlay.style.cssText = 'position:absolute;inset:0;background:#000;z-index:999999;pointer-events:none;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s';
++
++    const spinner = document.createElement('div');
++    spinner.style.cssText = 'width:48px;height:48px;border:4px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite';
++    overlay.appendChild(spinner);
++
++    const style = document.createElement('style');
++    style.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
++    document.head.appendChild(style);
++
++    player.appendChild(overlay);
++    return overlay;
+   }
+ 
+-  // Initial cleanup
+-  if (document.readyState === 'loading') {
+-    document.addEventListener('DOMContentLoaded', hideAdElements);
+-  } else {
+-    hideAdElements();
++  // Check if ad is active
++  function isAdActive() {
++    const player = document.querySelector('#movie_player');
++    if (!player) return false;
++    return player.classList.contains('ad-showing') || player.classList.contains('ad-interrupting');
+   }
+ 
+-  // Periodic cleanup - REDUCED frequency
+-  setInterval(hideAdElements, 2000);
++  // Try to click skip button (scoped to #movie_player)
++  function trySkip() {
++    const player = document.querySelector('#movie_player');
++    if (!player) return false;
+ 
+-  // Watch for dynamically added ads
+-  const observer = new MutationObserver(hideAdElements);
++    const video = player.querySelector('video');
++    if (!video) return false;
+ 
+-  const observeTarget = document.body || document.documentElement;
+-  if (observeTarget) {
+-    observer.observe(observeTarget, {
+-      childList: true,
+-      subtree: true
+-    });
++    // CRITICAL: Wait at least 5 seconds into the ad before trying to skip
++    // YouTube has server-side skip timer that must expire first
++    const adElapsed = (Date.now() - adStartTime) / 1000;
++    if (adElapsed < 5.0) {
++      return false; // Too early - server-side timer hasn't expired
++    }
++
++    // Check video is actually playing (player readiness)
++    if (video.paused || video.seeking || video.readyState < 3) {
++      return false;
++    }
++
++    // Check video has progressed (not frozen at 0:00)
++    if (video.currentTime < 0.5) {
++      return false;
++    }
++
++    // Primary target: .ytp-skip-ad button inside container
++    const skipContainer = player.querySelector('.ytp-skip-ad');
++    if (!skipContainer || skipContainer.offsetParent === null) return false;
++
++    const btn = skipContainer.querySelector('button.ytp-skip-ad-button');
++    if (!btn || btn.offsetParent === null) return false;
++
++    // Check if button is truly clickable (allow opacity 0.5 for YouTube's styling)
++    const style = window.getComputedStyle(btn);
++    if (parseFloat(style.opacity) < 0.3 || style.pointerEvents === 'none') {
++      return false;
++    }
++
++    // CRITICAL: Check countdown timer has expired
++    const skipText = btn.querySelector('.ytp-skip-ad-button__text');
++    if (skipText && skipText.textContent) {
++      const text = skipText.textContent.trim().toLowerCase();
++      // Must say "skip" not "skip in X"
++      if (!text.includes('skip') || text.includes('in ') || /\d/.test(text)) {
++        console.log('[YT-AdBlock] Skip timer still counting:', text);
++        return false;
++      }
++    }
++
++    console.log('[YT-AdBlock] Attempting skip at', adElapsed.toFixed(1), 'seconds');
++
++    // Get button position for system-level click
++    const rect = btn.getBoundingClientRect();
++    const x = Math.round(rect.left + rect.width / 2);
++    const y = Math.round(rect.top + rect.height / 2);
++
++    // Send request to main process for system-level click
++    if (window.ipc && window.ipc.send) {
++      console.log('[YT-AdBlock] Requesting system click at', x, y);
++      window.ipc.send('youtube-skip-click', { x, y });
++    } else {
++      // Fallback: try programmatic click (likely won't work)
++      console.log('[YT-AdBlock] IPC not available, trying fallback click');
++      btn.click();
++      btn.focus();
++      btn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
++      btn.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
++    }
++
++    return true;
+   }
+ 
+-  // Cleanup on unload
+-  window.addEventListener('beforeunload', () => {
+-    observer.disconnect();
+-  });
++  // Handle ad state changes
++  function handleAd() {
++    const player = document.querySelector('#movie_player');
++    if (!player) return;
++
++    const nowAdActive = isAdActive();
++    video = player.querySelector('video');
++
++    // Ad started
++    if (nowAdActive && !adActive) {
++      adStartTime = Date.now();
++      console.log('[YT-AdBlock] Ad detected');
++      adActive = true;
++
++      // Mute video - ALWAYS mute during ads
++      if (video) {
++        originalMuted = video.muted;
++        video.muted = true;
++        console.log('[YT-AdBlock] Video muted (was:', originalMuted, ')');
++      }
++
++      // Show overlay
++      createOverlay();
++      if (overlay) {
++        overlay.style.display = 'flex';
++        setTimeout(() => {
++          if (overlay && adActive) overlay.style.opacity = '1';
++        }, 50);
++      }
++
++      // Reset skip state
++      skipClicked = false;
++      skipAttempts = 0;
++
++      // Start checking for skip button every 200ms
++      if (checkInterval) clearInterval(checkInterval);
++      checkInterval = setInterval(() => {
++        if (!adActive || skipClicked) {
++          clearInterval(checkInterval);
++          checkInterval = null;
++          return;
++        }
++
++        skipAttempts++;
++
++        // Timeout after 30 seconds (150 attempts at 200ms)
++        if (skipAttempts >= 150) {
++          console.log('[YT-AdBlock] Skip timeout (30s)');
++          clearInterval(checkInterval);
++          checkInterval = null;
++          return;
++        }
++
++        if (trySkip()) {
++          skipClicked = true;
++          clearInterval(checkInterval);
++          checkInterval = null;
++        }
++      }, 200);
++    }
++    // Ad ended
++    else if (!nowAdActive && adActive) {
++      console.log('[YT-AdBlock] Ad ended');
++      adActive = false;
++
++      // Stop checking
++      if (checkInterval) {
++        clearInterval(checkInterval);
++        checkInterval = null;
++      }
++
++      // Restore video state - unmute if it wasn't muted before
++      if (video) {
++        video.muted = originalMuted;
++        console.log('[YT-AdBlock] Video unmuted (restored to:', originalMuted, ')');
++      }
++
++      // Hide overlay
++      if (overlay) {
++        overlay.style.opacity = '0';
++        setTimeout(() => {
++          if (overlay && !adActive) overlay.style.display = 'none';
++        }, 300);
++      }
++    }
++  }
+ 
+-  // Make ad blocker detectable for tracking tests
+-  // Create fake ad elements that get blocked (proves we're blocking)
+-  const testAd = document.createElement('div');
+-  testAd.className = 'adsbygoogle';
+-  testAd.style.cssText = 'position: absolute; top: -9999px; left: -9999px;';
+-  document.body.appendChild(testAd);
++  // Poll for ad state every 250ms
++  setInterval(handleAd, 250);
+ 
+-  // Also set window flags that ad blockers typically set
+-  window.__zephyrAdBlockActive = true;
+-  window.__zephyrVersion = '1.0.0';
++  // MutationObserver on #movie_player for class changes
++  const player = document.querySelector('#movie_player');
++  if (player) {
++    const observer = new MutationObserver(handleAd);
++    observer.observe(player, { attributes: true, attributeFilter: ['class'] });
++  }
+ 
++  console.log('[YT-AdBlock] Ready');
+ })();
+ `;
+ 
+@@ -416,73 +261,34 @@ class CosmeticInjector {
+   }
+ 
+   shouldInject(url) {
+-    if (!this.storage.isEnabled()) {
+-      console.log('[Cosmetic Injector] Adblock is disabled globally');
+-      return false;
+-    }
+-
++    if (!this.storage.isEnabled()) return false;
+     try {
+-      const urlObj = new URL(url);
+-      const hostname = urlObj.hostname;
+-
+-      // CRITICAL FIX: NEVER inject universal blocker on YouTube
+-      if (hostname === 'www.youtube.com' || hostname === 'youtube.com' ||
+-          hostname === 'm.youtube.com' || hostname === 'music.youtube.com') {
+-        console.log('[Cosmetic Injector] Skipping YouTube site:', hostname);
+-        return false;
+-      }
+-
+-      if (this.storage.isSiteAllowlisted(hostname)) {
+-        console.log('[Cosmetic Injector] Site is allowlisted:', hostname);
+-        return false;
+-      }
+-
+-      console.log('[Cosmetic Injector] Will inject into:', hostname);
++      const hostname = new URL(url).hostname;
++      if (this.storage.isSiteAllowlisted(hostname)) return false;
+       return true;
+-    } catch (error) {
+-      console.log('[Cosmetic Injector] URL parse error:', error);
++    } catch {
+       return false;
+     }
+   }
+ 
+   async injectIntoWebContents(webContents) {
+-    if (!webContents || webContents.isDestroyed()) {
+-      return false;
+-    }
++    if (!webContents || webContents.isDestroyed()) return false;
+ 
+     try {
+       const url = webContents.getURL();
++      if (!url || !this.shouldInject(url)) return false;
+ 
+-      if (!url || !this.shouldInject(url)) {
+-        return false;
+-      }
+-
+-      if ((process.env.ADBLOCK_DEBUG === '1')) {
+-        console.log('[Cosmetic Injector] Injecting into:', url);
+-      }
+-
+-      // Get engine-specific cosmetic filters
+-      const { styles } = this.engine.getCosmeticFilters(url);
+-
+-      // Inject universal CSS first
+       await webContents.insertCSS(UNIVERSAL_AD_BLOCKING_CSS);
+ 
+-      // Inject engine-specific CSS if available
++      const { styles } = this.engine.getCosmeticFilters(url);
+       if (styles && styles.length > 0) {
+         await webContents.insertCSS(styles);
+-        if ((process.env.ADBLOCK_DEBUG === '1')) {
+-          console.log('[Cosmetic Injector] Injected engine CSS filters');
+-        }
+       }
+ 
+-      // Inject generic cosmetic script
+       await webContents.executeJavaScript(GENERIC_COSMETIC_SCRIPT, true);
+-
+       return true;
+     } catch (error) {
+-      if ((process.env.ADBLOCK_DEBUG === '1')) {
+-        console.error('[Cosmetic Injector] Injection failed:', error);
+-      }
++      console.error('[Cosmetic Injector] Error:', error);
+       return false;
+     }
+   }

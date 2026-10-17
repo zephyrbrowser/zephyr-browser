@@ -1,0 +1,112 @@
+/* Mixer Panel Inline - Below Navbar */
+
+.mixer-panel-inline {
+  position: fixed;
+  top: calc(36px + var(--control-space-top) + 52px);
+  left: 0;
+  width: 100%;
+  max-height: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 10000;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.mixer-panel-inline.active {
+  max-height: 600px;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+.dark-theme .mixer-panel-inline {
+  background: #1e1e1e;
+  border-bottom-color: #3d3d3d;
+}
+
+/* Panel Header */
+.mixer-panel-inline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f8f9fa;
+}
+
+.dark-theme .mixer-panel-inline-header {
+  background: #2d2d2d;
+  border-bottom-color: #3d3d3d;
+}
+
+.mixer-panel-inline-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mixer-panel-inline-title h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #202124;
+}
+
+.dark-theme .mixer-panel-inline-title h2 {
+  color: #e8eaed;
+}
+
+.mixer-panel-inline-title .i {
+  font-size: 22px;
+  color: #1a73e8;
+}
+
+.dark-theme .mixer-panel-inline-title .i {
+  color: #8ab4f8;
+}
+
+/* Panel Content */
+.mixer-panel-inline-content {
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .mixer-panel-inline-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Form Row */
+.mixer-form-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .mixer-form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .mixer-swap-icon-inline {
+    display: none;
+  }
+}
+
+.mixer-swap-icon-inline {
+  color: #5f6368;
+  font-size: 20px;
+  padding-bottom: 12px;
+}
+
+.dark-theme .mixer-swap-icon-inline {
+  color: #9aa0a6;
+}

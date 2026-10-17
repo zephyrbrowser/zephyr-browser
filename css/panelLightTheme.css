@@ -1,0 +1,817 @@
+/* css/panelLightTheme.css
+   Force all Zephyr side panels (Mixer, Wallet, Bridge) to the light theme,
+   regardless of the .dark-theme class. Uses #71717B borders for separation. */
+
+:root {
+  --zephyr-panel-border: #71717B;
+}
+
+/* ---------- Panel containers ---------- */
+.mixer-panel,
+.wallet-panel,
+.bridge-panel,
+#agent-panel,
+.dark-theme .mixer-panel,
+.dark-theme .wallet-panel,
+.dark-theme .bridge-panel,
+.dark-theme #agent-panel {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12) !important;
+  border-left: 1px solid var(--zephyr-panel-border) !important;
+}
+
+/* ---------- Headers ---------- */
+.mixer-panel-header,
+.wallet-panel-header,
+.bridge-panel-header,
+.dark-theme .mixer-panel-header,
+.dark-theme .wallet-panel-header,
+.dark-theme .bridge-panel-header {
+  background: #f7f8fa !important;
+  border-bottom: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.mixer-panel-title h2,
+.wallet-panel-title h2,
+.bridge-panel-title h2,
+.dark-theme .mixer-panel-title h2,
+.dark-theme .wallet-panel-title h2,
+.dark-theme .bridge-panel-title h2 {
+  color: #111111 !important;
+}
+
+.mixer-panel-title .i,
+.wallet-panel-title .i,
+.bridge-panel-title .i {
+  color: #111111 !important;
+}
+
+.mixer-close-btn,
+.wallet-close-btn,
+.bridge-close-btn {
+  color: #5f6368 !important;
+}
+
+.mixer-close-btn:hover,
+.wallet-close-btn:hover,
+.bridge-close-btn:hover {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: #111111 !important;
+}
+
+/* ---------- Generic text inside panels ---------- */
+.mixer-panel label,
+.wallet-panel label,
+.bridge-panel label,
+.mixer-panel h2, .mixer-panel h3, .mixer-panel h4, .mixer-panel p, .mixer-panel span, .mixer-panel div,
+.wallet-panel h2, .wallet-panel h3, .wallet-panel h4, .wallet-panel p, .wallet-panel span, .wallet-panel div,
+.bridge-panel h2, .bridge-panel h3, .bridge-panel h4, .bridge-panel p, .bridge-panel span, .bridge-panel div {
+  color: #1f2328;
+}
+
+.dark-theme .mixer-panel label, .dark-theme .wallet-panel label, .dark-theme .bridge-panel label,
+.dark-theme .mixer-panel h2, .dark-theme .mixer-panel h3, .dark-theme .mixer-panel p, .dark-theme .mixer-panel span,
+.dark-theme .wallet-panel h2, .dark-theme .wallet-panel h3, .dark-theme .wallet-panel p, .dark-theme .wallet-panel span,
+.dark-theme .bridge-panel h2, .dark-theme .bridge-panel h3, .dark-theme .bridge-panel p, .dark-theme .bridge-panel span {
+  color: #1f2328 !important;
+}
+
+/* section labels / muted text */
+.mixer-section-label, .wallet-section-label, .bridge-section-label,
+.mixer-form-group label, .wallet-send-field label, .bridge-section-label,
+.wallet-balance-label, .wallet-tokens-empty {
+  color: #5b6470 !important;
+}
+
+/* ---------- Info / explainer cards ---------- */
+.mixer-info-section,
+.dark-theme .mixer-info-section,
+.bridge-simulation-section,
+.dark-theme .bridge-simulation-section,
+.wallet-session-warning,
+.dark-theme .wallet-session-warning,
+.wallet-token-info-panel,
+.dark-theme .wallet-token-info-panel {
+  background: #f3f4f6 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+  color: #1f2328 !important;
+}
+
+.mixer-info-content p,
+.mixer-info-content li,
+.mixer-info-header h3 {
+  color: #3a3f45 !important;
+}
+
+/* Bold / strong text inside warning + info cards must stay dark on light */
+.wallet-session-warning strong,
+.wallet-session-warning p,
+.dark-theme .wallet-session-warning strong,
+.dark-theme .wallet-session-warning p,
+.mixer-info-header h3,
+.dark-theme .mixer-info-header h3,
+.bridge-panel strong,
+.dark-theme .bridge-panel strong {
+  color: #111111 !important;
+}
+
+/* ---------- Inputs / selects ---------- */
+.mixer-input, .mixer-select,
+.wallet-send-input, .wallet-modal-input, .wallet-import-input, .wallet-address-box,
+.bridge-amount-input, .bridge-address-input, .bridge-select,
+.dark-theme .mixer-input, .dark-theme .mixer-select,
+.dark-theme .wallet-send-input,
+.dark-theme .bridge-amount-input, .dark-theme .bridge-address-input, .dark-theme .bridge-select {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-network-select,
+.dark-theme .wallet-network-select {
+  background: #f7f8fa !important;
+  color: #1a1a1a !important;
+  border: none !important;
+}
+
+.mixer-input::placeholder,
+.wallet-send-input::placeholder,
+.bridge-amount-input::placeholder,
+.bridge-address-input::placeholder {
+  color: #9aa3ad !important;
+}
+
+.mixer-input:focus, .mixer-select:focus,
+.wallet-send-input:focus, .wallet-network-select:focus,
+.bridge-amount-input:focus, .bridge-address-input:focus, .bridge-select:focus {
+  border-color: #111111 !important;
+  outline: none !important;
+}
+
+/* ---------- Estimate / readout rows ---------- */
+.mixer-estimate-section,
+.dark-theme .mixer-estimate-section {
+  background: #f3f4f6 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+  color: #1a1a1a !important;
+}
+
+.mixer-estimate-amount, .mixer-estimated-amount {
+  color: #111111 !important;
+}
+
+/* ---------- Address / balance boxes ---------- */
+.wallet-address-box,
+.dark-theme .wallet-address-box,
+.wallet-balance-section,
+.dark-theme .wallet-balance-section,
+.bridge-deposit-address-box,
+.dark-theme .bridge-deposit-address-box {
+  background: #f7f8fa !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-tokens-list,
+.dark-theme .wallet-tokens-list {
+  background: transparent !important;
+  border: none !important;
+}
+
+.wallet-address, .wallet-balance-amount, .wallet-balance-usd {
+  color: #111111 !important;
+}
+
+/* ---------- Primary buttons (Create Order / Send / Connect) ---------- */
+.mixer-create-btn,
+.bridge-create-btn,
+.wallet-btn-primary,
+.wallet-send-btn {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #111111 !important;
+}
+
+.mixer-create-btn:hover,
+.bridge-create-btn:hover,
+.wallet-btn-primary:hover,
+.wallet-send-btn:hover {
+  background: #000000 !important;
+}
+
+/* ---------- Secondary buttons ---------- */
+.wallet-btn-secondary,
+.dark-theme .wallet-btn-secondary {
+  background: #f1f3f5 !important;
+  color: #1a1a1a !important;
+  border: none !important;
+}
+
+.wallet-btn-secondary:hover {
+  background: #e6e8eb !important;
+}
+
+/* ---------- Settings rows (network / export / import) ---------- */
+.wallet-settings-group,
+.dark-theme .wallet-settings-group {
+  background: #f7f8fa !important;
+}
+
+/* ---------- Mixer order view ---------- */
+.mixer-countdown-hero,
+.dark-theme .mixer-countdown-hero {
+  background: #111111 !important;
+}
+
+.mixer-countdown-label,
+.dark-theme .mixer-countdown-label {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.mixer-countdown-time,
+.dark-theme .mixer-countdown-time {
+  color: #ffffff !important;
+}
+
+.mixer-swap-progress-track,
+.dark-theme .mixer-swap-progress-track {
+  background: #e6e8eb !important;
+}
+
+.mixer-swap-progress-fill,
+.dark-theme .mixer-swap-progress-fill {
+  background: #111111 !important;
+}
+
+.mixer-details-group,
+.dark-theme .mixer-details-group {
+  background: #f7f8fa !important;
+}
+
+.mixer-detail-row,
+.dark-theme .mixer-detail-row {
+  border-top-color: var(--zephyr-panel-border) !important;
+}
+
+.mixer-detail-key {
+  color: #5b6470 !important;
+}
+
+.mixer-detail-value,
+.dark-theme .mixer-detail-value {
+  color: #111111 !important;
+}
+
+.mixer-icon-btn,
+.dark-theme .mixer-icon-btn {
+  color: #5f6368 !important;
+}
+
+.mixer-icon-btn:hover,
+.dark-theme .mixer-icon-btn:hover {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: #111111 !important;
+}
+
+.mixer-cancel-btn,
+.dark-theme .mixer-cancel-btn {
+  background: #fdecea !important;
+  color: #b3261e !important;
+  border: none !important;
+}
+
+.mixer-cancel-btn:hover,
+.dark-theme .mixer-cancel-btn:hover {
+  background: #fbd9d5 !important;
+}
+
+.mixer-error-banner,
+.dark-theme .mixer-error-banner {
+  background: #fdecea !important;
+  color: #b3261e !important;
+  border: none !important;
+}
+
+.wallet-settings-row,
+.dark-theme .wallet-settings-row {
+  color: #1f2328 !important;
+  border-top-color: var(--zephyr-panel-border) !important;
+  opacity: 1;
+}
+
+.wallet-settings-row:hover,
+.dark-theme .wallet-settings-row:hover {
+  background: #eceef1 !important;
+}
+
+/* ---------- Borders between sections ---------- */
+.wallet-tokens-section,
+.wallet-network-section,
+.wallet-actions,
+.mixer-form-section,
+.bridge-from-section,
+.bridge-to-section,
+.bridge-recipient-section {
+  border-color: var(--zephyr-panel-border) !important;
+}
+
+/* dropdown option text on light */
+.mixer-select option,
+.wallet-network-select option,
+.bridge-select option {
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+/* ============================================================
+   Remaining dark containers — force light + #71717B borders
+   ============================================================ */
+
+/* ---- Wallet: private key display + box ---- */
+.wallet-private-key-display,
+.dark-theme .wallet-private-key-display,
+.wallet-private-key-box,
+.dark-theme .wallet-private-key-box {
+  background: #f7f8fa !important;
+  border: none !important;
+  color: #111111 !important;
+}
+
+.wallet-private-key-box {
+  word-break: break-all;
+}
+
+/* ---- Wallet: HIDE (danger) button ---- */
+.wallet-btn-danger,
+.dark-theme .wallet-btn-danger {
+  background: #f1f3f5 !important;
+  color: #b3261e !important;
+  border: none !important;
+}
+
+.wallet-btn-danger:hover,
+.dark-theme .wallet-btn-danger:hover {
+  background: #fdecea !important;
+}
+
+/* ---- Bridge: FROM / TO input groups ---- */
+.bridge-input-group,
+.dark-theme .bridge-input-group {
+  background: #f3f4f6 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+/* ---- Bridge: deposit (order) section ---- */
+.bridge-deposit-section,
+.dark-theme .bridge-deposit-section {
+  background: #f3f4f6 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.bridge-deposit-label,
+.dark-theme .bridge-deposit-label {
+  color: #5b6470 !important;
+}
+
+.bridge-deposit-instruction,
+.dark-theme .bridge-deposit-instruction {
+  color: #111111 !important;
+}
+
+.bridge-deposit-amount,
+.dark-theme .bridge-deposit-amount,
+.bridge-deposit-amount strong,
+.dark-theme .bridge-deposit-amount strong {
+  color: #1f2328 !important;
+}
+
+.bridge-deposit-address {
+  color: #111111 !important;
+}
+
+/* ---- Bridge: order details box ("You Send / You Receive") ---- */
+.bridge-order-details,
+.dark-theme .bridge-order-details {
+  background: #f3f4f6 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.bridge-order-label,
+.dark-theme .bridge-order-label {
+  color: #5b6470 !important;
+}
+
+.bridge-order-value,
+.dark-theme .bridge-order-value {
+  color: #111111 !important;
+}
+
+.bridge-order-row:not(:last-child),
+.dark-theme .bridge-order-row:not(:last-child) {
+  border-bottom: 1px solid var(--zephyr-panel-border) !important;
+}
+
+/* ---- Bridge: progress steps ---- */
+.bridge-step-icon,
+.dark-theme .bridge-step-icon {
+  background: #e6e8eb !important;
+  color: #5b6470 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.bridge-progress-step.active .bridge-step-icon,
+.bridge-progress-step.completed .bridge-step-icon {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #111111 !important;
+}
+
+.bridge-step-label,
+.dark-theme .bridge-step-label {
+  color: #5b6470 !important;
+}
+
+.bridge-progress-step.active .bridge-step-label,
+.bridge-progress-step.completed .bridge-step-label,
+.dark-theme .bridge-progress-step.active .bridge-step-label,
+.dark-theme .bridge-progress-step.completed .bridge-step-label {
+  color: #111111 !important;
+}
+
+/* ---- Bridge: order header (id / status) ---- */
+.bridge-order-id,
+.dark-theme .bridge-order-id {
+  color: #111111 !important;
+}
+
+/* ---- Bridge: Start New Bridge button (was white-on-white / invisible) ---- */
+.bridge-new-order-btn,
+.dark-theme .bridge-new-order-btn {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #111111 !important;
+}
+
+.bridge-new-order-btn:hover,
+.dark-theme .bridge-new-order-btn:hover {
+  background: #000000 !important;
+}
+
+/* ---- Bridge: status badge (pending / waiting etc.) ---- */
+.bridge-status-badge {
+  background: #f1f3f5 !important;
+  color: #5b6470 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.bridge-status-badge.waiting,
+.bridge-status-badge.pending {
+  background: #fff4d6 !important;
+  color: #8a6d00 !important;
+  border-color: #e6c869 !important;
+}
+
+.bridge-status-badge.confirming,
+.bridge-status-badge.exchanging,
+.bridge-status-badge.sending {
+  background: #e3effd !important;
+  color: #1a5fb4 !important;
+  border-color: #9ec5f5 !important;
+}
+
+.bridge-status-badge.completed {
+  background: #e4f7ea !important;
+  color: #146c2e !important;
+  border-color: #93d6a8 !important;
+}
+
+.bridge-status-badge.failed,
+.bridge-status-badge.expired {
+  background: #fdecea !important;
+  color: #b3261e !important;
+  border-color: #f0a8a2 !important;
+}
+
+/* ---- Bridge: Copy buttons (order id + deposit) ---- */
+.bridge-copy-btn,
+.dark-theme .bridge-copy-btn,
+.bridge-copy-order-id-btn,
+.dark-theme .bridge-copy-order-id-btn {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.bridge-copy-btn:hover,
+.bridge-copy-order-id-btn:hover {
+  background: #f1f3f5 !important;
+}
+
+/* ============================================================
+   Wallet: token list + add/refresh buttons + Send modal
+   ============================================================ */
+
+/* ---- Add token / Refresh token icon buttons (were vanishing on hover) ---- */
+.wallet-refresh-tokens-btn,
+.dark-theme .wallet-refresh-tokens-btn {
+  color: #5b6470 !important;
+  background: transparent !important;
+}
+
+.wallet-refresh-tokens-btn:hover,
+.dark-theme .wallet-refresh-tokens-btn:hover {
+  color: #111111 !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+.wallet-balance-refresh-btn,
+.dark-theme .wallet-balance-refresh-btn {
+  color: #5b6470 !important;
+}
+
+.wallet-balance-refresh-btn:hover {
+  color: #111111 !important;
+}
+
+/* ---- Token list rows ---- */
+.wallet-token-item,
+.dark-theme .wallet-token-item {
+  background: #f7f8fa !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-token-item:hover,
+.dark-theme .wallet-token-item:hover {
+  background: #eef0f2 !important;
+}
+
+.wallet-token-name,
+.dark-theme .wallet-token-name,
+.wallet-token-amount,
+.dark-theme .wallet-token-amount {
+  color: #111111 !important;
+}
+
+.wallet-token-symbol,
+.wallet-token-usd,
+.wallet-token-balance {
+  color: #5b6470 !important;
+}
+
+.wallet-token-arrow,
+.dark-theme .wallet-token-arrow,
+.dark-theme .wallet-token-item:hover .wallet-token-arrow {
+  color: #8a929c !important;
+}
+
+.wallet-token-icon,
+.dark-theme .wallet-token-icon {
+  background: #111111 !important;
+}
+
+.wallet-token-icon .i,
+.dark-theme .wallet-token-icon .i {
+  color: #ffffff !important;
+}
+
+/* ---- Send modal: container + content ---- */
+.wallet-send-modal,
+.dark-theme .wallet-send-modal {
+  background: #ffffff !important;
+}
+
+.wallet-send-header,
+.dark-theme .wallet-send-header {
+  background: #f7f8fa !important;
+  border-bottom: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-send-header h3,
+.dark-theme .wallet-send-header h3 {
+  color: #111111 !important;
+}
+
+.wallet-send-back-btn,
+.dark-theme .wallet-send-back-btn {
+  color: #5b6470 !important;
+}
+
+.wallet-send-back-btn:hover,
+.dark-theme .wallet-send-back-btn:hover {
+  color: #111111 !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* asset header card */
+.wallet-send-asset,
+.dark-theme .wallet-send-asset {
+  background: #f3f4f6 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-send-asset-symbol,
+.dark-theme .wallet-send-asset-symbol {
+  color: #111111 !important;
+}
+
+.wallet-send-asset-balance {
+  color: #5b6470 !important;
+}
+
+.wallet-send-asset-icon,
+.dark-theme .wallet-send-asset-icon {
+  background: #111111 !important;
+}
+
+.wallet-send-asset-icon .i,
+.dark-theme .wallet-send-asset-icon .i {
+  color: #ffffff !important;
+}
+
+/* labels + inputs */
+.wallet-send-field label,
+.dark-theme .wallet-send-field label {
+  color: #5b6470 !important;
+}
+
+.wallet-send-input,
+.dark-theme .wallet-send-input {
+  background: #ffffff !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+  color: #111111 !important;
+}
+
+.wallet-send-input::placeholder {
+  color: #9aa3ad !important;
+}
+
+.wallet-send-input:focus,
+.dark-theme .wallet-send-input:focus {
+  border-color: #111111 !important;
+}
+
+/* MAX button */
+.wallet-send-max-btn,
+.dark-theme .wallet-send-max-btn {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.wallet-send-max-btn:hover,
+.dark-theme .wallet-send-max-btn:hover {
+  background: #000000 !important;
+}
+
+/* fee + summary rows */
+.wallet-send-fee,
+.dark-theme .wallet-send-fee {
+  color: #5b6470 !important;
+  border-top: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-send-summary,
+.dark-theme .wallet-send-summary {
+  background: #f3f4f6 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-send-summary-row span:first-child {
+  color: #5b6470 !important;
+}
+
+.wallet-send-summary-row span:last-child,
+.dark-theme .wallet-send-summary-row span:last-child {
+  color: #111111 !important;
+}
+
+/* token info panel rows */
+.wallet-token-info-label {
+  color: #5b6470 !important;
+}
+
+.wallet-token-info-value {
+  color: #111111 !important;
+}
+
+/* footer (CANCEL / SEND) */
+.wallet-send-footer,
+.dark-theme .wallet-send-footer {
+  background: #f7f8fa !important;
+  border-top: 1px solid var(--zephyr-panel-border) !important;
+}
+
+/* SEND primary button in footer */
+.wallet-send-footer .wallet-btn-primary {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #111111 !important;
+}
+
+/* CANCEL secondary button in footer */
+.wallet-send-footer .wallet-btn-secondary {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+/* processing / success / error states */
+.wallet-send-processing,
+.dark-theme .wallet-send-processing,
+.wallet-send-success,
+.dark-theme .wallet-send-success,
+.wallet-send-error-state,
+.dark-theme .wallet-send-error-state {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+/* ---------- Inline approval cards (Connect / Transaction / Sign message) ---------- */
+.wallet-connect-inline,
+.wallet-tx-inline,
+.wallet-msg-inline,
+.dark-theme .wallet-connect-inline,
+.dark-theme .wallet-tx-inline,
+.dark-theme .wallet-msg-inline {
+  background: #ffffff !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  color: #111111 !important;
+}
+
+.wallet-connect-inline-header,
+.wallet-tx-inline-header,
+.dark-theme .wallet-connect-inline-header,
+.dark-theme .wallet-tx-inline-header {
+  border-bottom: 1px solid #e4e4e7 !important;
+}
+
+.wallet-connect-inline-header .i,
+.wallet-tx-inline-header .i,
+.wallet-connect-inline-header h3,
+.wallet-tx-inline-header h3,
+.dark-theme .wallet-connect-inline-header .i,
+.dark-theme .wallet-tx-inline-header .i,
+.dark-theme .wallet-connect-inline-header h3,
+.dark-theme .wallet-tx-inline-header h3 {
+  color: #111111 !important;
+}
+
+/* requesting site */
+.wallet-connect-origin-display,
+.dark-theme .wallet-connect-origin-display {
+  background: #ffffff !important;
+  border: 1px solid #e4e4e7 !important;
+  color: #111111 !important;
+  font-weight: 600 !important;
+}
+
+.wallet-connect-info-text,
+.dark-theme .wallet-connect-info-text {
+  color: #52525b !important;
+}
+
+/* risk warnings */
+.wallet-tx-warning-item,
+.dark-theme .wallet-tx-warning-item {
+  background: #fffbeb !important;
+  border-left: 3px solid #f59e0b !important;
+  border-radius: 6px !important;
+  color: #92400e !important;
+}
+
+/* transaction / message details */
+.wallet-tx-details-inline,
+.wallet-msg-content-inline,
+.dark-theme .wallet-tx-details-inline,
+.dark-theme .wallet-msg-content-inline {
+  background: #ffffff !important;
+  border: 1px solid #e4e4e7 !important;
+  color: #1f2328 !important;
+}
+
+.wallet-tx-details-inline div,
+.wallet-tx-details-inline strong,
+.wallet-msg-content-inline div,
+.wallet-msg-content-inline span {
+  color: #1f2328 !important;
+}
+
+.wallet-tx-details-inline strong {
+  color: #111111 !important;
+}
+
+/* Reject button: outlined so it reads as a real button on the white card */
+.wallet-connect-inline .wallet-btn-secondary,
+.wallet-tx-inline .wallet-btn-secondary,
+.wallet-msg-inline .wallet-btn-secondary {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid var(--zephyr-panel-border) !important;
+}
+
+.wallet-connect-inline .wallet-btn-secondary:hover,
+.wallet-tx-inline .wallet-btn-secondary:hover,
+.wallet-msg-inline .wallet-btn-secondary:hover {
+  background: #f4f4f5 !important;
+}

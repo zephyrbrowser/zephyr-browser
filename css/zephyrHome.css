@@ -1,0 +1,522 @@
+/* css/zephyrHome.css — Zephyr centered home-screen agent */
+
+#zephyr-home {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px 40px;
+  /* Cloud background from welcome assets */
+  background-image: url("zephyr://app/pages/welcome/assets/images/bgimg.png");
+  background-position: center bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #f3f6f9;
+  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-y: auto;
+}
+
+/* Hide the default NTP background image / picker when the home agent owns the screen */
+body.is-ntp #ntp-background,
+body.is-ntp #ntp-background-controls {
+  display: none !important;
+}
+
+/* ---- Hero (greeting) ---- */
+#zephyr-home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 26px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#zephyr-home-logo {
+  width: 230px;
+  height: auto;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 14px 36px rgba(0, 0, 0, 0.2));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#zephyr-home-greeting {
+  font-size: 21px;
+  font-weight: 400;
+  color: #2b2b2b;
+  margin-bottom: 4px;
+}
+
+#zephyr-home-title {
+  font-size: 50px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* When a conversation is active, collapse the big hero */
+#zephyr-home.has-conversation #zephyr-home-hero {
+  margin-bottom: 14px;
+}
+
+#zephyr-home.has-conversation #zephyr-home-logo {
+  width: 96px;
+  margin-bottom: 8px;
+}
+
+#zephyr-home.has-conversation #zephyr-home-greeting {
+  display: none;
+}
+
+/* Hide the "How can I help you?" title once a conversation starts —
+   it only shows on the default (empty) home screen. */
+#zephyr-home.has-conversation #zephyr-home-title {
+  display: none;
+}
+
+/* ---- Conversation ---- */
+#zephyr-home-conversation {
+  display: none;
+  width: 100%;
+  max-width: 720px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 8px 4px 12px;
+  margin-bottom: 14px;
+}
+
+#zephyr-home.has-conversation #zephyr-home-conversation {
+  display: block;
+  scrollbar-width: none;
+}
+
+.zh-message {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.zh-message-user {
+  justify-content: flex-end;
+}
+
+.zh-message-assistant,
+.zh-message-error {
+  justify-content: flex-start;
+}
+
+.zh-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.zh-message-user .zh-bubble {
+  background: #111;
+  color: #fff;
+  border-bottom-right-radius: 5px;
+}
+
+.zh-message-assistant .zh-bubble {
+  background: rgba(255, 255, 255, 0.92);
+  color: #1a1a1a;
+  border-bottom-left-radius: 5px;
+}
+
+.zh-message-error .zh-bubble {
+  background: #ffe9e9;
+  color: #b3261e;
+  border: 1px solid #f3b4b0;
+}
+
+.zh-msg-img-wrap {
+  margin-top: 8px;
+}
+
+.zh-msg-img {
+  max-width: 180px;
+  max-height: 180px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: block;
+}
+
+/* tool activity chip */
+.zh-tool-activity {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #5b6470;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin: 0 0 12px 2px;
+}
+
+.zh-tool-detail {
+  color: #8a929c;
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* typing indicator */
+.zh-typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
+  border-bottom-left-radius: 5px;
+  margin-bottom: 14px;
+}
+
+.zh-typing .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9aa3ad;
+  animation: zhBlink 1.2s infinite ease-in-out;
+}
+
+.zh-typing .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.zh-typing .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes zhBlink {
+
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* ---- Input bar ---- */
+#zephyr-home-inputbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 560px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 30px;
+  padding: 8px 8px 8px 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  flex: 0 0 auto;
+}
+
+#zephyr-home-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1.4;
+  max-height: 120px;
+  color: #1a1a1a;
+  font-family: inherit;
+  padding: 6px 0;
+}
+
+#zephyr-home-input::placeholder {
+  color: #9aa3ad;
+}
+
+/* scan / attach icon (left of mic) */
+.zephyr-home-icon-btn {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 20px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.zephyr-home-icon-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #111;
+}
+
+.zephyr-home-scan-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.zephyr-home-icon-btn:hover .zephyr-home-scan-icon {
+  opacity: 1;
+}
+
+/* mic button — black circle */
+.zephyr-home-mic-btn {
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.zephyr-home-mic-btn:hover {
+  background: #000;
+}
+
+.zephyr-home-mic-btn:active {
+  transform: scale(0.94);
+}
+
+.zephyr-home-mic-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* listening state — red pulse */
+.zephyr-home-mic-btn.listening {
+  background: #e02424;
+  box-shadow: 0 0 0 0 rgba(224, 36, 36, 0.5);
+  animation: zhMicPulse 1.4s infinite;
+}
+
+@keyframes zhMicPulse {
+  0% { box-shadow: 0 0 0 0 rgba(224, 36, 36, 0.5); }
+  70% { box-shadow: 0 0 0 12px rgba(224, 36, 36, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(224, 36, 36, 0); }
+}
+
+/* send / search button — black circle with arrow */
+.zephyr-home-send-btn {
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.zephyr-home-send-btn:hover {
+  background: #000;
+}
+
+.zephyr-home-send-btn:active {
+  transform: scale(0.92);
+}
+
+/* ---- AI Mode toggle button (Google-style pill) ---- */
+.zephyr-home-ai-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 20px;
+  background: #ffffff;
+  color: #3a3f45;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.zephyr-home-ai-btn .i {
+  font-size: 17px;
+}
+
+.zephyr-home-ai-btn:hover {
+  background: #f1f3f5;
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+/* active = AI mode ON */
+.zephyr-home-ai-btn.active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+.zephyr-home-ai-btn.active:hover {
+  background: #000;
+}
+
+/* ---- image preview ---- */
+#zephyr-home-image-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 6px 10px;
+  max-width: 560px;
+}
+
+#zephyr-home-image-preview-img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+#zephyr-home-image-preview-name {
+  font-size: 13px;
+  color: #4a4a4a;
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#zephyr-home-image-remove {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  color: #888;
+  cursor: pointer;
+}
+
+/* ---- inline confirmation ---- */
+.zh-confirm {
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.zh-confirm-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #1a1a1a;
+}
+
+.zh-confirm-message {
+  font-size: 14px;
+  color: #333;
+  white-space: pre-wrap;
+  margin-bottom: 12px;
+}
+
+.zh-confirm-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.zh-confirm-buttons button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.zh-confirm-cancel {
+  background: #ececec;
+  color: #333;
+}
+
+.zh-confirm-approve {
+  background: #111;
+  color: #fff;
+}
+
+/* ---- fullscreen image overlay ---- */
+#zh-image-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#zh-image-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+}
+
+.zh-image-overlay-close {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 34px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  #zephyr-home-title {
+    font-size: 34px;
+  }
+
+  #zephyr-home-logo {
+    width: 110px;
+  }
+}

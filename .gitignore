@@ -1,0 +1,30 @@
+/node_modules
+/.vscode
+/.idea
+.npm
+dist
+main.build.js
+.DS_Store
+package-lock.json
+yarn.lock
+nul
+.claude
+.env
+/backend
+# Ignore all Markdown files
+*.md
+**/*.md
+
+# Ignore backup ZIP files
+*.zip
+
+# Ignore environment files
+.env
+.env.*
+!.env.example
+
+# Private keys (fee wallet, API keys, bot token) — template is main/secrets.example.js
+main/secrets.js
+*.pem
+*.key
+*keypair*.json
